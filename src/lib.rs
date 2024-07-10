@@ -71,7 +71,7 @@ impl<const N: usize> MqttClient<N> {
 
         // variable header
         writer.write_string(topic);
-        writer.write_u16(0); // Packet identifier
+        // writer.write_u16(0); // Packet identifier
         writer.write_u8(0); // No properties
 
         // payload
