@@ -1,5 +1,3 @@
-#![no_std]
-
 use num_derive::{FromPrimitive, ToPrimitive};
 use num_traits::FromPrimitive;
 
@@ -11,21 +9,21 @@ pub mod reader_writer;
 
 pub type MqttResult<T> = Result<T, MqttError>;
 
-pub struct MqttClient<const N: usize> {
+pub struct MqttClient {
     state: MqttState,
     packet_counter: PacketIdCounter,
 
-    construct_buffer: [u8; N],
-    message_buffer: [u8; N],
+    construct_buffer: Vec<u8>,
+    message_buffer: Vec<u8>,
 }
 
-impl<const N: usize> MqttClient<N> {
-    pub fn new() -> Self {
+impl MqttClient {
+    pub fn new(buf_size: usize) -> Self {
         Self {
             state: MqttState::Disconnected,
             packet_counter: PacketIdCounter::new(),
-            construct_buffer: [0; N],
-            message_buffer: [0; N],
+            construct_buffer: vec![0; buf_size],
+            message_buffer: vec![0; buf_size],
         }
     }
 
